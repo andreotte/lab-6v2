@@ -13,6 +13,7 @@ namespace lab6
         {
             bool play = true;
 
+            // Loop if user wants to roll again.
             while (play)
             {
                 Random rando = new Random();
@@ -27,6 +28,7 @@ namespace lab6
             }
         }
 
+        // Method to get dice side number and number of dice from user
         public static void GetInput(Random rand)
         {
             int sideNumber;
@@ -39,30 +41,34 @@ namespace lab6
             string dice = Console.ReadLine();
             int.TryParse(dice, out diceNumber);
 
-            if(sideNumber == 0 || diceNumber == 0)
+            // Re-run GetInput() when invalid user input
+            if (sideNumber == 0 || diceNumber == 0)
             {
                 Console.WriteLine("Invalid input. Enter sides and dice number as integers.");
                 GetInput(rand);
             }
-
-            Console.WriteLine($"sides: {sides}, dice: {dice}, sideNumer: {sideNumber}, diceNumber: {diceNumber}");
-            string results = Roll(sideNumber, diceNumber, rand);
-            Console.WriteLine(results);
+            else
+            {
+                string results = Roll(sideNumber, diceNumber, rand);
+                Console.WriteLine(results);
+            } 
         }
 
+        // Method to generate a random number.
         public static int GetRandom(int max, Random rand)
         {
             int number = rand.Next(1, max + 1);
             return number;
         }
 
+        // Method to roll dice and print rolls results to the console.
         public static string Roll(int sides, int dice, Random rand)
         {
             int total = 0;
             int output;
             string results = "";
 
-            for (int i = 0; i < dice; i++) // Change i < val to change number of random numbers generated
+            for (int i = 0; i < dice; i++) 
             {
                 output = GetRandom(sides, rand);
                 results += ($"Die roll #{i + 1}: {output}\n");
